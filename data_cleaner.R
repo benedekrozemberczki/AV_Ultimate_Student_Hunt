@@ -1,8 +1,6 @@
 library(caTools)
 library(lubridate)
 
-setwd("C:/Users/Benedek/Documents/rain/")
-
 train <- read.csv("./raw_dataset/train.csv", stringsAsFactors = FALSE)
 test <- read.csv("./raw_dataset/test.csv", stringsAsFactors = FALSE)
 
@@ -203,8 +201,11 @@ data_munger <- function(input_table){
 new_train <- data_munger(train)
 new_test <- data_munger(test)
 
+#-----------------------------------------
+#
+#
+#-----------------------------------------
+
 write.csv(new_train, file = "./clean_dataset/train.csv", row.names = FALSE)
 write.csv(new_test, file = "./clean_dataset/test.csv", row.names = FALSE)
 write.csv(target, file = "./clean_dataset/target.csv", row.names = FALSE)
-
-
