@@ -205,16 +205,15 @@ data_munger <- function(input_table){
   return(new_table)
 }
 
-#----------------------
-# Creating the tables
-#----------------------
+#--------------------------------------------
+# Creating the cleaned test and train tables.
+#--------------------------------------------
 
 new_train <- data_munger(train)
 new_test <- data_munger(test)
 
 #-----------------------------------------
-#
-#
+# Dumping the tables and arget variables.
 #-----------------------------------------
 
 write.csv(new_train, file = "./clean_dataset/train.csv", row.names = FALSE)
