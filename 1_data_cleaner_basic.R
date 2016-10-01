@@ -62,9 +62,9 @@ dummygen <- function(new_table, original_table, dummified_column, column_values,
   return(new_table)
 }
 
-#----------------------------------------------------
-# Normalizing the names in the train and test tables.
-#----------------------------------------------------
+#------------------------------------------------------------
+# Normalizing the feature names in the train and test tables.
+#------------------------------------------------------------
 
 train <- proper_feature_names(train)
 test <- proper_feature_names(test)
@@ -72,8 +72,9 @@ test <- proper_feature_names(test)
 data_munger <- function(input_table){
   
   #------------------------------------
+  # This function cleans the data.
   # INPUT -- The table to be cleaned.
-  # OUTPUT -- The cleaned numeric tables.
+  # OUTPUT -- The cleaned numeric table.
   #------------------------------------
   
   #----------------------------------------------
@@ -89,34 +90,55 @@ data_munger <- function(input_table){
   
   colnames(new_table) <- c("id")
   
-  #---------------------------------------------
-  # Park ID
-  #---------------------------------------------
+  #----------------------------
+  # Park ID dummy generation.
+  #----------------------------
   
   park_id <- c(12:39)
   
   new_table <- dummygen(new_table, input_table, "park_id", park_id, "park_id_")
   
-  input_table$monkey <- paste0(substr(input_table$date, 7, 10),"-",substr(input_table$date, 4, 5),"-",substr(input_table$date, 1, 2)) 
+  #------------------------------------------------------
+  # Generating a proper day variable in the input table.
+  #------------------------------------------------------
   
-  input_table$days <- lubridate::wday(input_table$monkey)
+  input_table$monkey_day <- paste0(substr(input_table$date, 7, 10),"-",substr(input_table$date, 4, 5),"-",substr(input_table$date, 1, 2)) 
   
-  new_table$super_monkey <- yday(input_table$monkey)
+  #-------------------------------------
+  # Generating  a day of week indicator.
+  #-------------------------------------
+  
+  input_table$days <- lubridate::wday(input_table$monkey_day)
+  
+  #---------------------------------------
+  # Generating  a day of year categorical.
+  #---------------------------------------
+  
+  new_table$super_monkey_day <- yday(input_table$monkey_day)
+  
+  #--------------------------------------
+  # Generating  a day of month categorical.
+  #--------------------------------------
    
-  new_table$hyper_monkey <- mday(input_table$monkey)
+  new_table$hyper_monkey_day <- mday(input_table$monkey_day)
+  
+  #---------------------------------------------------
+  # Creating dummies from the day of week categorical.
+  #---------------------------------------------------
+  
   days <- c(1:7)
 
   new_table <- dummygen(new_table, input_table, "days", days, "week_days_")
 
-  #-----------------------
-  # Days simple solution
-  #-----------------------
+  #-----------------------------------------------------------------------
+  # Days simple solution -- this is biased, but works as a biweekly proxy.
+  #-----------------------------------------------------------------------
   
   new_table$date <- yday(input_table$date)
   
-  #--------
-  # Month
-  #--------
+  #------------------------
+  # Month dummy variables.
+  #------------------------
    
   input_table$first_two <- substr(input_table$date, 6, 7)
   
@@ -126,9 +148,9 @@ data_munger <- function(input_table){
   
   new_table <- dummygen(new_table, input_table, "first_two", first_two, "first_two_")
   
-  #---------------------------
-  #
-  #---------------------------
+  #----------------------------------------------------
+  # Extracting the numeric variables the way they are.
+  #----------------------------------------------------
   
   columns_to_extract_exactly <- c("direction_of_wind", 
                                   "average_breeze_speed",
@@ -146,8 +168,11 @@ data_munger <- function(input_table){
   
   sub_table <- input_table[, columns_to_extract_exactly]
   
-  
   new_table <- cbind(new_table, sub_table)
+  
+  #---------------------------------------------------------------------
+  # Creating moving window standard deviation variables for the different parks.
+  #------------------------------------------------------------------------------
   
   names_to_use <- colnames(sub_table)
   
@@ -155,8 +180,7 @@ data_munger <- function(input_table){
   
   for (i in 1:ncol(sub_table)){
     for (k in keys){
-    sub_table[input_table$park_id == k ,i] <- runsd(sub_table[input_table$park_id == k,i], 4, endrule="constant")
-    
+      sub_table[input_table$park_id == k, i] <- runsd(sub_table[input_table$park_id == k, i], 4, endrule = "constant")
     }
   }
   
@@ -164,10 +188,15 @@ data_munger <- function(input_table){
   
   new_table <- cbind(new_table, sub_table)
   
+  #----------------------------------------------------------------
+  # Creating moving window mean variables for the different parks.
+  #----------------------------------------------------------------
+  
   keys <- unique(input_table$park_id)
+  
   for (i in 1:ncol(sub_table)){
     for (k in keys){
-    sub_table[input_table$park_id == k,i] <- runmean(sub_table[input_table$park_id == k,i], 4, endrule="constant")
+      sub_table[input_table$park_id == k, i] <- runmean(sub_table[input_table$park_id == k, i], 4, endrule = "constant")
     }
   }
   
@@ -175,20 +204,31 @@ data_munger <- function(input_table){
   
   new_table <- cbind(new_table, sub_table)
   
+  #-----------------------------------------------------------------
+  # Creating moving window maxima variables for the different parks.
+  #-----------------------------------------------------------------
+  
   keys <- unique(input_table$park_id)
+  
   for (i in 1:ncol(sub_table)){
     for (k in keys){
-      sub_table[input_table$park_id == k,i] <- runmax(sub_table[input_table$park_id == k,i], 7, endrule="constant")
+      sub_table[input_table$park_id == k, i] <- runmax(sub_table[input_table$park_id == k, i], 7, endrule = "constant")
     }
   }
+  
   colnames(sub_table) <- paste0("max_", names_to_use)
   
   new_table <- cbind(new_table, sub_table)
   
+  #-----------------------------------------------------------------
+  # Creating moving window minima variables for the different parks.
+  #-----------------------------------------------------------------
+  
   keys <- unique(input_table$park_id)
+  
   for (i in 1:ncol(sub_table)){
     for (k in keys){
-      sub_table[input_table$park_id == k,i] <- runmin(sub_table[input_table$park_id == k,i], 7, endrule="constant")
+      sub_table[input_table$park_id == k, i] <- runmin(sub_table[input_table$park_id == k, i], 7, endrule="constant")
     }
   }
   
@@ -196,9 +236,11 @@ data_munger <- function(input_table){
   
   new_table <- cbind(new_table, sub_table)
   
+  #----------------------------
+  # Creating location dummies.
+  #----------------------------
   
   location_type <- c(1:4)
-  
   
   new_table <- dummygen(new_table, input_table, "location_type", location_type, "location_type_")
   
