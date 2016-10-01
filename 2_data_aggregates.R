@@ -1,31 +1,30 @@
 library(dplyr)
 
-#-------------------------------------------------
-#
-#-------------------------------------------------
+#-------------------------------------
+# Reading the training and test sets.
+#-------------------------------------
 
 train <- read.csv("./raw_dataset/train.csv", stringsAsFactors = FALSE)
 test <- read.csv("./raw_dataset/test.csv", stringsAsFactors = FALSE)
 
-#--------------------------------------------
-#
-#
-#--------------------------------------------
+#----------------------------------------------------------
+# Dropping the target and transforming the variable names.
+#----------------------------------------------------------
 
 train <- train[, 1:17]
-colnames(train) <- colnames(test) <-tolower(colnames(test))
+colnames(train) <-tolower(colnames(test))
+colnames(test) <-tolower(colnames(test))
 
 #-------------------------------------
-#
-#
+# Transforming the id to be a time ID.
 #-------------------------------------
 
 train$time_id <- as.numeric(substr(as.character(train$id), 1, 5))
 test$time_id <- as.numeric(substr(test$id, 1, 5))
 
-#-----------------------------------------
-#
-#-----------------------------------------
+#-------------------------------------
+# Selecting the exogeneous varaibles.
+#-------------------------------------
 
 keepers <-  c("direction_of_wind", 
                 "average_breeze_speed",
@@ -41,11 +40,10 @@ keepers <-  c("direction_of_wind",
                 "max_moisture_in_park",
                 "min_moisture_in_park")
 
-#----------------------------------------------
-#
-#
-#
-#----------------------------------------------
+#------------------------------------------------------------
+# Generating aggregates of the exogeneous variables.
+# Means, minimae, maximae and standard deviation aggregates.
+#------------------------------------------------------------
 
 train_means <- aggregate(train[keepers], list(train$time_id), mean, na.rm = TRUE)
 test_means <- aggregate(test[keepers], list(test$time_id), mean, na.rm = TRUE)
@@ -59,24 +57,23 @@ test_maxs <- aggregate(test[keepers], list(test$time_id), max, na.rm = TRUE)
 train_sds <-aggregate(train[keepers], list(train$time_id), sd, na.rm = TRUE)
 test_sds <- aggregate(test[keepers], list(test$time_id), sd, na.rm = TRUE)
 
-#--------------------------------------------------
-#
-#
-#--------------------------------------------------
+#--------------------------------------------
+# The aggregate tables are joined together.
+#--------------------------------------------
 
-new_train <- cbind(train_means, train_mins[,2:14], train_maxs[,2:14], train_sds[,2:14])
-new_test <- cbind(test_means, test_mins[,2:14], test_maxs[,2:14], test_sds[,2:14])
+new_train <- cbind(train_means, train_mins[, 2:14], train_maxs[, 2:14], train_sds[, 2:14])
+new_test <- cbind(test_means, test_mins[, 2:14], test_maxs[, 2:14], test_sds[, 2:14])
 
-#----------------------------------
-#
-#----------------------------------
+#----------------------------------------------
+# A convenient variable naming scheme is made.
+#----------------------------------------------
 
-colnames(new_train) <- colnames(new_test) <-c("time_id", paste0("X_", 1:52))
+colnames(new_train) <- c("time_id", paste0("X_", 1:52))
+colnames(new_test) <- c("time_id", paste0("X_", 1:52))
 
-#---------------------------------------------
-#
-#
-#---------------------------------------------
+#--------------------------------------------------------------
+# These tables are joined to the original train and test ID.
+#--------------------------------------------------------------
 
 train_key <- data.frame(train$time_id)
 colnames(train_key) <- "time_id"
@@ -88,10 +85,9 @@ colnames(test_key) <- "time_id"
 new_test <- left_join(test_key, new_test)
 new_test <- new_test[,2:53]
 
-#-----------------------------------------
-#
-#-----------------------------------------
+#------------------------------------------------------
+# Dumping the aggregate tables for the whole datasets.
+#------------------------------------------------------
 
-
-write.csv(new_train,"./clean_dataset/train_aggregates.csv", row.names=FALSE)
-write.csv(new_test,"./clean_dataset/test_aggregates.csv", row.names=FALSE)
+write.csv(new._train,"./clean_dataset/train_aggregates.csv", row.names = FALSE)
+write.csv(new_test,"./clean_dataset/test_aggregates.csv", row.names = FALSE)
