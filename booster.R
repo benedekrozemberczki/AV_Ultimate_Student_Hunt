@@ -1,5 +1,4 @@
 library(xgboost)
-setwd("/afs/inf.ed.ac.uk/user/s16/s1668259/Documents/booster/")
 
 #------------------------------------------
 # Reading the training data and the labels.
