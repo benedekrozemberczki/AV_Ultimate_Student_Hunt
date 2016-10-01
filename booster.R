@@ -33,9 +33,9 @@ rm(train_agg, test_agg)
 
 labels <- read.csv("./clean_dataset/target.csv", stringsAsFactors = FALSE)
 
-#------------------------------
-#
-#------------------------------
+#----------------------------------------------------------------------------------------------
+# Missing values are encoded as negative values -- this only works with tree based algorithms.
+#----------------------------------------------------------------------------------------------
 
 train[is.na(train)] <- -300
 test[is.na(test)] <- -300
@@ -67,15 +67,17 @@ target <- labels$x
 train <- data.matrix(train)
 test <- data.matrix(test)
 
-#-----------------------
-#
-#-----------------------
+#-------------------------------------
+# A vector to contain the predictions.
+#-------------------------------------
 
 zeros <- rep(0, 39420)
 
-#-------------------
-#
-#-------------------
+#--------------------------------------------
+# I will fit 50 models.
+# The predictions are averaged out.
+# So this is simply an ensemble of boosters.
+#--------------------------------------------
 
 control <- 50
 
