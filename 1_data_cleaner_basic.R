@@ -1,8 +1,16 @@
 library(caTools)
 library(lubridate)
 
+#---------------------------------
+# Reading the train and test sets.
+#---------------------------------
+
 train <- read.csv("./raw_dataset/train.csv", stringsAsFactors = FALSE)
 test <- read.csv("./raw_dataset/test.csv", stringsAsFactors = FALSE)
+
+#--------------------------------------------------------------
+# Selecting the target and dropping it from the training frame.
+#--------------------------------------------------------------
 
 target <- train$Footfall
 
@@ -11,6 +19,7 @@ train <- train[, 1:17]
 proper_feature_names <- function(input_table){
   
   #--------------------------------------------
+  # This function normalizes the column names.
   # INPUT -- Table with messed up column names.
   # OUTPUT -- Table with proper column names.
   #--------------------------------------------
@@ -31,14 +40,15 @@ proper_feature_names <- function(input_table){
 
 dummygen <- function(new_table, original_table, dummified_column, column_values, new_name){ 
   
-  #-----------------------------------------------------------------
+  #---------------------------------------------------------------------------------------
+  # This function generates dummies from a categorical variable and adds them to a table.
   # INPUT 1. -- The new cleaned table -- I will attach the dummies.
   # INPUT 2. -- The original table that is being cleaned.
   # INPUT 3. -- The column that has the strings.
   # INPUT 4. -- The unique values in the column encoded.
   # INPUT 5. -- The new name of the columns.
   # OUTPUT -- The new table with the dummy variables.
-  #-----------------------------------------------------------------
+  #---------------------------------------------------------------------------------------
   
   i <- 0
   
@@ -52,11 +62,12 @@ dummygen <- function(new_table, original_table, dummified_column, column_values,
   return(new_table)
 }
 
+#----------------------------------------------------
+# Normalizing the names in the train and test tables.
+#----------------------------------------------------
 
 train <- proper_feature_names(train)
 test <- proper_feature_names(test)
-
-input_table <- train
 
 data_munger <- function(input_table){
   
