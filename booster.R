@@ -7,29 +7,29 @@ library(xgboost)
 train <- read.csv("./clean_dataset/train.csv", stringsAsFactors = FALSE)
 test <- read.csv("./clean_dataset/test.csv", stringsAsFactors = FALSE)
 
-#----------------------------------------
-#
-#----------------------------------------
+#------------------------------------
+# Reading the aggreagte data tables.
+#------------------------------------
 
 train_agg <- read.csv("./clean_dataset/train_aggregates.csv", stringsAsFactors = FALSE)
 test_agg <- read.csv("./clean_dataset/test_aggregates.csv", stringsAsFactors = FALSE)
 
-#-------------------------------------------
-#
-#-------------------------------------------
+#----------------------------------------------------
+# Joining the aggregate tables and the original ones.
+#----------------------------------------------------
 
 train <- cbind(train, train_agg)
 test <- cbind(test,test_agg)
 
 #-------------------------------
-#
+# Removing the aggregate tables.
 #-------------------------------
 
 rm(train_agg, test_agg)
 
-#--------------------------------
-#
-#--------------------------------
+#------------------------------
+# Reading the target vectors.
+#------------------------------
 
 labels <- read.csv("./clean_dataset/target.csv", stringsAsFactors = FALSE)
 
@@ -40,29 +40,29 @@ labels <- read.csv("./clean_dataset/target.csv", stringsAsFactors = FALSE)
 train[is.na(train)] <- -300
 test[is.na(test)] <- -300
 
-#--------------------------------------------------
-# Dropping the ID and selecting the label variable.
-#--------------------------------------------------
+#----------------------------
+# Selecting the id variable.
+#----------------------------
 
 test_id <- test$id
 train_id <- train$id
 
 #-------------------------------------------
-#
+# Dropping the ID variable before training.
 #-------------------------------------------
 
 train <- train[, 2:ncol(train)]
 test <- test[, 2:ncol(test)]
 
-#----------------------------------------
-#
-#----------------------------------------
+#-----------------------
+# Selecting the target.
+#-----------------------
 
 target <- labels$x
 
-#--------------------------------------
-#
-#--------------------------------------
+#------------------------
+# Transforming the sets.
+#------------------------
 
 train <- data.matrix(train)
 test <- data.matrix(test)
@@ -97,10 +97,19 @@ for (i in 1:control){
 }
 
 zeros <- zeros/control
+
+#---------------------------------------------
+# Creating a submission frame.
+# Renaming columns and dealing with the bias.
+#---------------------------------------------
+
 submission <- data.frame(test_id, zeros, stringsAsFactors = FALSE)
 
 colnames(submission) <- c("ID", "Footfall")
 
 submission$Footfall <- submission$Footfall*(0.987)
 
+#------------------------------
+# Dumping the submission file.
+#------------------------------
 write.csv(submission, file = "final_submission.csv", row.names = FALSE)
