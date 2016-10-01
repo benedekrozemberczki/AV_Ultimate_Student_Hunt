@@ -12,8 +12,8 @@ test <- read.csv("./raw_dataset/test.csv", stringsAsFactors = FALSE)
 #----------------------------------------------------------
 
 train <- train[, 1:17]
-colnames(train) <-tolower(colnames(test))
-colnames(test) <-tolower(colnames(test))
+colnames(train) <- tolower(colnames(test))
+colnames(test) <- tolower(colnames(test))
 
 #-------------------------------------
 # Transforming the id to be a time ID.
@@ -78,12 +78,12 @@ colnames(new_test) <- c("time_id", paste0("X_", 1:52))
 train_key <- data.frame(train$time_id)
 colnames(train_key) <- "time_id"
 new_train <- left_join(train_key, new_train)
-new_train <- new_train[,2:53]
+new_train <- new_train[, 2:53]
 
 test_key <- data.frame(test$time_id)
 colnames(test_key) <- "time_id"
 new_test <- left_join(test_key, new_test)
-new_test <- new_test[,2:53]
+new_test <- new_test[, 2:53]
 
 #------------------------------------------------------
 # Dumping the aggregate tables for the whole datasets.
