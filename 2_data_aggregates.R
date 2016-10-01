@@ -89,5 +89,5 @@ new_test <- new_test[,2:53]
 # Dumping the aggregate tables for the whole datasets.
 #------------------------------------------------------
 
-write.csv(new._train,"./clean_dataset/train_aggregates.csv", row.names = FALSE)
-write.csv(new_test,"./clean_dataset/test_aggregates.csv", row.names = FALSE)
+write.csv(new._train, "./clean_dataset/train_aggregates.csv", row.names = FALSE)
+write.csv(new_test, "./clean_dataset/test_aggregates.csv", row.names = FALSE)
