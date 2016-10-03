@@ -38,7 +38,7 @@ The inclusion of the above mentioned aggregates resulted in a root mean squared 
 
 ## Model fitting and generating a submission file
 
-For model fitting I have used extreme gradient boosting. The model parameters were the following:
+Before model fitting I have imputed negative values in place of the missing feature values -- this is meaningful because the features in this specific case cannot take negative values. For model fitting I have used extreme gradient boosting. The model parameters were the following:
 * Number of trees at 400.
 * Learning rate of 0.1.
 * Depth of 6.
