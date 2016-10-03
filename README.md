@@ -1,5 +1,6 @@
 # AV Ultimate Student Hunt
-This set of scripts is my solution for the Ultimate Student Hunt Challenge from Analyics Vidhya. With this analytic solution I was able to take the first place on the private leaderboard. The machine learning problem itself was regression based on panel data with daily frequency.
+
+This set of scripts is my solution for the Ultimate Student Hunt Challenge from Analyics Vidhya. With this analytic solution I was able to take the first place on the private leaderboard. The machine learning problem itself was regression based on panel data with daily frequency. The good public and private leaderboard results of the predictor were mainly based on the fact that the across cross-sectional unit aggregates helped with the quite prevalent missing feature problem.
 
 ## Data cleaning
 ### Functions in the data cleaner
@@ -22,9 +23,12 @@ As a first step I normalized the feature names in the table -- capital letters c
 * Based on the weather features I calculated moving window means and standard deviation values. Also I used minimum and maximum values for these variables. These variables capture local tendencies in the data and they also deal with the high frequncy noise in the data.
 * The location type variable is encoded with  binary features.
 
-With these variables (if day of year was excluded) and model stacking (extreme gradient boosting) one could have a solid 106 root mean squared error on the public leaderboard.
+With these variables (if day of year was excluded) and  with the application of model stacking (extreme gradient boosting) one could have a solid 106 root mean squared error on the public leaderboard. Moreover, it became evident that the predictor is biased -- namely that is consequently overestimated the footfall.
 
-### 
+### The introduction of aggregates
 
-
+*
+*
+*
+*
 
