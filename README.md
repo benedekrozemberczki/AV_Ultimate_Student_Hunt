@@ -25,7 +25,7 @@ As a first step I normalized the feature names in the table -- capital letters c
 
 With these variables (if day of year was excluded) and  with the application of model stacking (extreme gradient boosting) one could have a solid 106 root mean squared error on the public leaderboard. Moreover, it became evident that the predictor is biased -- namely that it has consequently overestimated the footfall. Discounting every prediction by a factor below 1, imporeved the error. This is not so surprising if one considers that time series trends might have changed also a spatial separation of the test and training sets might affect the estimator in a similar way. Namely, one can say that somekind of residual autocorrelation probably results in a biased estimator.
 
-### The introduction of aggregates
+## The introduction of aggregates
 
 Based on the fact that there are data points from the same time period (panel nature of the data) one can calculate time-period specific  aggregated weather meaures. To put it simply, one migh calculate the average minimal air pressure on a given day or the standard deviation of average pollution in the different parks. These tables of aggregates later are left joined to the clean data tables -- because of the neat functionalities of R I used column binding.  The joined subtables are the following:
 
@@ -36,7 +36,7 @@ Based on the fact that there are data points from the same time period (panel na
 
 The inclusion of the above mentioned aggregates resulted in a root mean squared error of 100 on public the leaderboard. The day of year variable without theses aggregated led to overfitting, however if these variables were included it started to help with obtaining a better fit. If the aggregates and the day of year were included together the resulting root mean squared error on the public leaderboard was about 95.
 
-### Model fitting and generating a submission file
+## Model fitting and generating a submission file
 
 For model fitting I have used extreme gradient boosting. The model parameters were the following:
 * Number of trees at 400.
@@ -44,4 +44,6 @@ For model fitting I have used extreme gradient boosting. The model parameters we
 * Depth of 6.
 * Subsampling rate at 0.5 -- it helped with the quite strong noise. The model did not try to generalize to the noise.
 
-Because there is a random element in the model creation a model averaging proess is meaningful -- this is why I estimated 50 models. The average of these predictions was used for creating the submission file. In the end I have discounted the resulting estimates with a factor close to 0.99.
+Initally I have tried cross-validation and grid search to find an optimal parameter setting, but it was inconclusive due to the fact that the cross-validation and actual error were quite far off from each other. 
+
+Because there wass a random element (subsampling of rows) in the model fitting an estimation averaging process is meaningful -- this is why I estimated 50 models. The average of these predictions was used for creating the submission file. In the end I have discounted the resulting estimates with a factor close to 0.99.
