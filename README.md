@@ -27,8 +27,20 @@ With these variables (if day of year was excluded) and  with the application of 
 
 ### The introduction of aggregates
 
-*
-*
-*
-*
+Based on the fact that there are data points from the same time period (panel nature of the data) one can calculate time-period specific  aggregated weather meaures. To put it simply, one migh calculate the average minimal air pressure on a given day or the standard deviation of average pollution in the different parks. These tables of aggregates later are left joined to the clean data tables -- because of the neat functionalities of R I used column binding.  The joined subtables are the following:
 
+* Means of the weather variables.
+* Minima of the weather variables
+* Maxima of the weather variables.
+* Standard deviation of the weather variables.
+
+The inclusion of the above mentioned aggregates resulted in a root mean squared error of 100 on public the leaderboard. The day of year variable without theses aggregated led to overfitting, however if these variables were included it started to help with obtaining a better fit. If the aggregates and the day of year were included together the resulting root mean squared error on the public leaderboard was about 95.
+
+### Model fitting and generating a submission file
+
+For model fitting I have used extreme gradient boosting. The model parameters were the following:
+
+* Learning rate of 0.1.
+* Depth of 6.
+* Subsampling rate at 0.5 -- it helped with quite strong noise.
+* 
