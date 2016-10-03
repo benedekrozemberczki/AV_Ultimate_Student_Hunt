@@ -1,2 +1,4 @@
-# AV_Ultimate_Student_Hunt
-Solution for the Ultimate Student Hunt Challenge.
+## AV Ultimate Student Hunt
+This set of scripts is a solution for the Ultimate Student Hunt Challenge from Analyics Vidhya.
+
+
