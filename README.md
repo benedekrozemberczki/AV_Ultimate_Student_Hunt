@@ -44,4 +44,4 @@ For model fitting I have used extreme gradient boosting. The model parameters we
 * Depth of 6.
 * Subsampling rate at 0.5 -- it helped with the quite strong noise. The model did not try to generalize to the noise.
 
-Because there is a random element in the model creation a model averaging proess is meaningful -- this is why I estimated 50 models. In the end I have discounted the resulting estimates witha  factor close to 0.99.
+Because there is a random element in the model creation a model averaging proess is meaningful -- this is why I estimated 50 models. The average of these predictions was used for creating the submission file. In the end I have discounted the resulting estimates with a factor close to 0.99.
