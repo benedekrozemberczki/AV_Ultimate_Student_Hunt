@@ -23,7 +23,7 @@ As a first step I normalized the feature names in the table -- capital letters c
 * Based on the weather features I calculated moving window means and standard deviation values. Also I used minimum and maximum values for these variables. These variables capture local tendencies in the data and they also deal with the high frequncy noise in the data.
 * The location type variable is encoded with  binary features.
 
-With these variables (if day of year was excluded) and  with the application of model stacking (extreme gradient boosting) one could have a solid 106 root mean squared error on the public leaderboard. Moreover, it became evident that the predictor is biased -- namely that is consequently overestimated the footfall.
+With these variables (if day of year was excluded) and  with the application of model stacking (extreme gradient boosting) one could have a solid 106 root mean squared error on the public leaderboard. Moreover, it became evident that the predictor is biased -- namely that it has consequently overestimated the footfall. Discounting every prediction by a factor below 1, imporeved the error. This is not so surprising if one considers that time series trends might have changed also a spatial separation of the test and training sets might affect the estimator in a similar way. Namely, one can say that somekind of residual autocorrelation probably results in a biased estimator.
 
 ### The introduction of aggregates
 
@@ -39,8 +39,9 @@ The inclusion of the above mentioned aggregates resulted in a root mean squared 
 ### Model fitting and generating a submission file
 
 For model fitting I have used extreme gradient boosting. The model parameters were the following:
-
+* Number of trees at 400.
 * Learning rate of 0.1.
 * Depth of 6.
-* Subsampling rate at 0.5 -- it helped with quite strong noise.
-* 
+* Subsampling rate at 0.5 -- it helped with the quite strong noise. The model did not try to generalize to the noise.
+
+Because there is a random element in the model creation a model averaging proess is meaningful -- this is why I estimated 50 models. In the end I have discounted the resulting estimates witha  factor close to 0.99.
