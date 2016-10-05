@@ -7,9 +7,52 @@ This set of scripts is my solution for the Ultimate Student Hunt Challenge from 
 0. The scripts should be placed in a folder where the following subfolders exist:
   1.  A subfolder named "raw_dataset" with the original training and test csv files. These are named as train.csv and test.csv
   2. A subfolder named "clean_dataset" where the created csv files will be dumped.
+1. The scripts were written under R 3.3.1 (2016-06-01).
 
-1. The scripts should be executed as a whole in the order they are numbered. If the working directory is not overwritten by an other command then the scripts can be called by Rscript scriptname on the linux cmmandline if the current commandline directory is the directory of the scripts.
-
+2. The scripts should be executed as a whole in the order they are numbered. If the working directory is not overwritten by an other command then the scripts can be called by Rscript scriptname on the linux commandline if the current commandline directory is the directory of the scripts.
+3. The data cleaning script ("1_data_cleaner_basic.R") uses the csv files in the "raw_dataset" subfolder and dumps the following csv files in the "clean_dataset" subfolder:
+  1. train.csv
+  2. test.csv
+  3. target.csv
+5. The data cleaning script ("1_data_cleaner_basic.R") uses the following packages:
+  1. lubridate_1.5.6 
+  2. caTools_1.17.1
+6. The data cleaning script ("1_data_cleaner_basic.R") loads the following packages to the namespace indirectly (dependence):
+  1. magrittr_1.5  
+  2. tools_3.3.1   
+  3. stringi_1.1.1 
+  4. stringr_1.0.0 
+  5. bitops_1.0-6
+7. The data cleaning script ("1_data_cleaner_basic.R") masks the following object from ‘package:base’:
+  1. date
+8. The data aggregation script ("2_data_aggregates.R") uses the csv files in the "raw_dataset" subfolder and dumps the following csv files in the "clean_dataset" subfolder:
+  1. test_aggregates.csv
+  2. train_aggregates.csv
+9. The data aggregation script ("2_data_aggregates.R") uses the following packages:
+  1. dplyr_0.5.0
+10. The data aggregation script ("2_data_aggregates.R") loads the following packages to the namespace indirectly (dependence):
+  1. magrittr_1.5   
+  2. R6_2.1.2       
+  3. assertthat_0.1 
+  4. DBI_0.4-1      
+  5. tools_3.3.1   
+  6. tibble_1.1     
+  7. Rcpp_0.12.6   
+11. The data aggregation script ("2_data_aggregates.R") masks the following object from ‘package:base’:
+  1.  intersect
+  2. setdiff
+  3. setequal
+  4. union
+12. The data aggregation script ("2_data_aggregates.R") masks the following object from ‘package:stats’: 
+ 2. graphics  
+ 3. grDevices utils     
+ 4. datasets  
+ 5. methods   
+ 6. base
+13. The modeller ("3_booster_and_submissions.R") uses the csv files in the "clean_dataset" subfolder and dumps the following csv file in the main working folder:
+  1. "final_prediction.csv"
+ 
+ 
 
 
 ## Data cleaning
