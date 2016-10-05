@@ -5,8 +5,8 @@ This set of scripts is my solution for the Ultimate Student Hunt Challenge from 
 ## Additional informations for running the scripts
 
 0. The scripts should be placed in a folder where the following subfolders exist:
-.1.  A subfolder named "raw_dataset" with the original training and test csv files. These are named as train.csv and test.csv
-.2. A subfolder named "clean_dataset" where the created csv files will be dumped.
+  1.  A subfolder named "raw_dataset" with the original training and test csv files. These are named as train.csv and test.csv
+  2. A subfolder named "clean_dataset" where the created csv files will be dumped.
 
 1. The scripts should be executed in the order they are numbered.
 
