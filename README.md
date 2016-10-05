@@ -51,9 +51,18 @@ This set of scripts is my solution for the Ultimate Student Hunt Challenge from 
  6. base
 13. The modeller ("3_booster_and_submissions.R") uses the csv files in the "clean_dataset" subfolder and dumps the following csv file in the main working folder:
   1. "final_prediction.csv"
- 
- 
-
+9. The modeller ("3_booster_and_submissions.R") uses the following packages:
+  1. xgboost_0.4-4
+15. The modeller ("3_booster_and_submissions.R") loads the following packages to the namespace indirectly (dependence):
+  1. magrittr_1.5     
+  2. Matrix_1.2-6     
+  3. tools_3.3.1     
+  4. stringi_1.1.1    
+  5. grid_3.3.1       
+  6. data.table_1.9.6
+  7. stringr_1.0.0    
+  8. chron_2.3-47     
+  9. lattice_0.20-33
 
 ## Data cleaning
 ### Functions in the data cleaner
