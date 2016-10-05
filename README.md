@@ -2,6 +2,18 @@
 
 This set of scripts is my solution for the Ultimate Student Hunt Challenge from Analyics Vidhya. With this analytic solution I was able to take the first place on the private leaderboard. The machine learning problem itself was regression based on panel data with daily frequency. The good public and private leaderboard results of the predictor were mainly based on the fact that the across cross-sectional unit aggregates helped with the quite prevalent missing feature problem.
 
+## Additional informations for running the scripts
+
+0. The scripts should be placed in a folder where the following subfolders exist:
+..1.
+..2.
+..3.
+..4.
+..5.
+..6.
+
+1. The scripts should be executed in the order they are numbered.
+
 ## Data cleaning
 ### Functions in the data cleaner
 There are three customly defined functions in the data cleaning script these are:
