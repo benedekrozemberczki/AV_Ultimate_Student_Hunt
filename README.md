@@ -8,7 +8,9 @@ This set of scripts is my solution for the Ultimate Student Hunt Challenge from 
   1.  A subfolder named "raw_dataset" with the original training and test csv files. These are named as train.csv and test.csv
   2. A subfolder named "clean_dataset" where the created csv files will be dumped.
 
-1. The scripts should be executed in the order they are numbered.
+1. The scripts should be executed as a whole in the order they are numbered. If the working directory is not overwritten by an other command then the scripts can be called by Rscript scriptname on the linux cmmandline if the current commandline directory is the directory of the scripts.
+
+
 
 ## Data cleaning
 ### Functions in the data cleaner
