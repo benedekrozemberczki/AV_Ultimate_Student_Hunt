@@ -114,4 +114,4 @@ submission$Footfall <- submission$Footfall*(0.987)
 #------------------------------
 # Dumping the submission file.
 #------------------------------
-write.csv(submission, file = "final_submission.csv", row.names = FALSE)
+write.csv(submission, file = "final_prediction.csv", row.names = FALSE)
