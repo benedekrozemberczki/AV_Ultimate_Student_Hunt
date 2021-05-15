@@ -108,4 +108,6 @@ Before model fitting I have imputed negative values in place of the missing feat
 
 Initally I have tried cross-validation and grid search to find an optimal parameter setting, but it was inconclusive due to the fact that the cross-validation and actual error were quite far off from each other. 
 
-Because there wass a random element (subsampling of rows) in the model fitting an estimation averaging process is meaningful -- this is why I estimated 50 models. The average of these predictions was used for creating the submission file. In the end I have discounted the resulting estimates with a factor close to 0.99.
+Because there was a random element (subsampling of rows) in the model fitting an estimation averaging process is meaningful -- this is why I estimated 50 models. The average of these predictions was used for creating the submission file. In the end I have discounted the resulting estimates with a factor close to 0.99.
+
+--------------------------------------------------------------------------------
