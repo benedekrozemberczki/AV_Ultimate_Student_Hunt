@@ -1,6 +1,6 @@
 # AV Ultimate Student Hunt 
 
-------------------------------------------------
+----------------------------------------
 
 ![GitHub stars](https://img.shields.io/github/stars/benedekrozemberczki/AV_Ultimate_Student_Hunt.svg?style=plastic) ![GitHub forks](https://img.shields.io/github/forks/benedekrozemberczki/AV_Ultimate_Student_Hunt.svg?color=blue&style=plastic)
 
